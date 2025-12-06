@@ -62,7 +62,31 @@ window.onload = function() {
     requestAnimationFrame(update);
     setInterval(placePipes, 1500); //every 1.5 seconds
     document.addEventListener("keydown", moveBird);
+    
+    // ADD THE TOUCH/CLICK SUPPORT HERE (right after the keydown listener)
+    board.addEventListener('touchstart', function(e) {
+        e.preventDefault(); // Prevent scrolling/zoom on mobile
+        velocityY = -6; // Jump (same as keyboard)
+        if (gameOver) { // Reset game on tap if over (matches keyboard behavior)
+            bird.y = birdY;
+            pipeArray = [];
+            score = 0;
+            gameOver = false;
+        }
+    });
+
+    board.addEventListener('click', function(e) {
+        velocityY = -6; // Jump (for mouse on PC)
+        if (gameOver) { // Reset game on click if over
+            bird.y = birdY;
+            pipeArray = [];
+            score = 0;
+            gameOver = false;
+        }
+    });
+
 }
+
 
 function update() {
     requestAnimationFrame(update);
